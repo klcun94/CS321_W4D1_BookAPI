@@ -13,13 +13,13 @@ namespace CS321_W4D1_BookAPI.Services
 
         public AuthorService(BookContext bookContext)
         {
-            // TODO: keep a reference to the AuthorContext in _AuthorContext
+            // keep a reference to the AuthorContext in _AuthorContext
             _bookContext = bookContext;
         }
 
         public Author Add(Author Author)
         {
-            // TODO: implement add
+            // implement add
             _bookContext.Authors.Add(Author);
             _bookContext.SaveChanges();
             return Author;
@@ -27,35 +27,35 @@ namespace CS321_W4D1_BookAPI.Services
 
         public Author Get(int id)
         {
-            // TODO: return the specified Author using Find()
+            // return the specified Author using Find()
             return _bookContext.Authors.Find(id);
         }
 
         public IEnumerable<Author> GetAll()
         {
-            // TODO: return all Authors using ToList()
+            // return all Authors using ToList()
             return _bookContext.Authors.ToList();
         }
 
         public Author Update(Author updatedAuthor)
         {
-            // get the ToDo object in the current list with this id 
+            // get the author object in the current list with this id 
             var currentAuthor = _bookContext.Authors.Find(updatedAuthor.Id);
 
-            // return null if todo to update isn't found
+            // return null if author to update isn't found
             if (currentAuthor == null) return null;
 
             // NOTE: This method is already completed for you, but note
             // how the property values are copied below.
 
-            // copy the property values from the changed todo into the
+            // copy the property values from the changed author into the
             // one in the db. NOTE that this is much simpler than individually
             // copying each property.
             _bookContext.Entry(currentAuthor)
                 .CurrentValues
                 .SetValues(updatedAuthor);
 
-            // update the todo and save
+            // update the author and save
             _bookContext.Authors.Update(currentAuthor);
             _bookContext.SaveChanges();
             return currentAuthor;
@@ -63,7 +63,7 @@ namespace CS321_W4D1_BookAPI.Services
 
         public void Remove(Author Author)
         {
-            // TODO: remove the Author
+            // remove the Author
             _bookContext.Authors.Remove(Author);
             _bookContext.SaveChanges();
         }

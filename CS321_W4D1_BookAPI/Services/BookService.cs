@@ -41,23 +41,23 @@ namespace CS321_W4D1_BookAPI.Services
 
         public Book Update(Book updatedBook)
         {
-            // get the ToDo object in the current list with this id 
+            // get the book object in the current list with this id 
             var currentBook = _bookContext.Books.Find(updatedBook.Id);
 
-            // return null if todo to update isn't found
+            // return null if book to update isn't found
             if (currentBook == null) return null;
 
             // NOTE: This method is already completed for you, but note
             // how the property values are copied below.
 
-            // copy the property values from the changed todo into the
+            // copy the property values from the changed book into the
             // one in the db. NOTE that this is much simpler than individually
             // copying each property.
             _bookContext.Entry(currentBook)
                 .CurrentValues
                 .SetValues(updatedBook);
 
-            // update the todo and save
+            // update the book and save
             _bookContext.Books.Update(currentBook);
             _bookContext.SaveChanges();
             return currentBook;
@@ -65,11 +65,28 @@ namespace CS321_W4D1_BookAPI.Services
 
         public void Remove(Book book)
         {
-            // TODO: remove the book
+            // remove the book
             _bookContext.Books.Remove(book);
             _bookContext.SaveChanges();
         }
 
-        // TODO: implement GetBooksForAuthor() method
+        // implement GetBooksForAuthor() method
+        public IEnumerable<Book> GetBooksForAuthor(int authorId)
+        {
+            return _bookContext.Books
+                .Include(b => b.Publisher)
+                .Include(b => b.Author)
+                .Where(b => b.AuthorId == authorId)
+                .ToList();
+        }
+
+        public IEnumerable<Book> GetBooksForPublisher(int publisherId)
+        {
+            return _bookContext.Books
+                .Include(b => b.Publisher)
+                .Include(b => b.Author)
+                .Where(b => b.PublisherId == publisherId)
+                .ToList();
+        }
     }
 }
